@@ -1,0 +1,30 @@
+{
+	"name": "voicing-telegram-bot",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc && tsc-alias",
+		"start": "node --env-file=.env dist/app.js",
+		"buildnstart": "npm run build && npm run start"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@types/ffmpeg": "^1.0.7",
+		"@types/node": "^24.1.0",
+		"@types/node-telegram-bot-api": "^0.64.9",
+		"ts-node": "^10.9.2",
+		"tsc-alias": "^1.8.16",
+		"tsconfig-paths": "^4.2.0",
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"@types/archiver": "^6.0.3",
+		"@zip.js/zip.js": "^2.7.71",
+		"archiver": "^7.0.1",
+		"ffmpeg": "^0.0.4",
+		"node-telegram-bot-api": "^0.66.0"
+	}
+}
