@@ -4,12 +4,15 @@ export const middlewaresBefore: Middleware[] = [
 	{
 		stage: "before",
 		async handleMessage(context, msg) {
-			console.log("[ResetMiddleware]", "Current state:", context.data.stateId)
+			if (msg.text?.trim() !== "/reset") return
+			if (context.data.stateId === "result_download") return
+			
+			if (context.data.stateId === "reset_confirm") {
+				context.data.flags["toReset"] = true
+				return "scenario_upload"
+			}
 
-			if (["reset_confirm", "result_download"].indexOf(context.data.stateId) !== -1) return
-			else if (msg.text?.trim() === "/reset") return "reset_confirm"
-
-			return
+			return "reset_confirm"
 		},
 	},
 ]
