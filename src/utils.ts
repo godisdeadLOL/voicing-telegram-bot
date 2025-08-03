@@ -21,7 +21,7 @@ export async function archiveFolderContent(folderPath: string, outputPath: strin
 
 export function convertAudio(inputPath: string, outputPath: string) {
 	return new Promise((resolve, reject) => {
-		const command = `ffmpeg -y -i "${inputPath}" "${outputPath}`
+		const command = `ffmpeg -y -i "${inputPath}" "${outputPath}"`
 
 		exec(command, (error) => {
 			if (!error) resolve(outputPath)
