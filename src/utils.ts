@@ -25,7 +25,7 @@ export function convertAudio(inputPath: string, outputPath: string) {
 
 		exec(command, (error) => {
 			if (!error) resolve(outputPath)
-			else reject("ffmpeg error")
+			else reject(new Error(error.message))
 		})
 	})
 }
