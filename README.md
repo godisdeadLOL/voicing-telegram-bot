@@ -4,9 +4,9 @@
 
 ---
 
-# 🌍 Демо
+# 🤖 Демо
 
-🤖 [@voicing_telegram_bot](https://t.me/voicing_telegram_bot)
+[@voicing_telegram_bot](https://t.me/voicing_telegram_bot)
 
 ## ⚙️ Функционал
 
