@@ -9,6 +9,12 @@ import TelegramBot from "node-telegram-bot-api"
 if (!process.env.TELEGRAM_TOKEN) throw new Error("TELEGRAM_TOKEN is not set in the .env file")
 
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: { interval: 600, autoStart: false } })
+bot.setMyCommands([
+	{
+		command: "reset",
+		description: "Сброс бота",
+	},
+])
 
 const eventManager = new EventManager(100)
 

@@ -106,7 +106,7 @@ export class ClipRecordState extends ChatState<ClipRecordData> implements IMessa
 		const scenarioEntry = saveData.scenario[saveData.index]
 
 		const downloadPath = await bot.downloadFile(voice.file_id, `downloads/${chatId}`)
-		const audioPath = `downloads/${chatId}/clips/${scenarioEntry.id}-${scenarioEntry.index}.wav`
+		const audioPath = `downloads/${chatId}/clips/${scenarioEntry.index}-${scenarioEntry.id}.wav`
 
 		await convertAudio(downloadPath, audioPath)
 		await fs.rm(downloadPath)
@@ -147,6 +147,6 @@ export class ClipRecordState extends ChatState<ClipRecordData> implements IMessa
 		const { error } = this.getSaveData(context)
 		if (!error) return
 
-		await bot.sendMessage(chatId, `⚠️ Ошибка при загрузке аудио: \`${error}\`.\nПожалуйста, попробуйте еще раз.`, { parse_mode: "Markdown" })
+		await bot.sendMessage(chatId, `⚠️ Ошибка при загрузке аудио: _${error}_.\nПожалуйста, попробуйте еще раз.`, { parse_mode: "Markdown" })
 	}
 }

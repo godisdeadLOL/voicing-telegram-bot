@@ -1,12 +1,12 @@
 import { Action, ConfirmStateData } from "./types"
 
 import { ChatContextManager } from "@/core/ChatContextManager"
-import { ICallbackQueryHandler } from "@/core/states"
+import { ICallbackQueryHandler, IMessageHandler } from "@/core/states"
 import { ChatState } from "@/core/states/ChatState"
 import { ConfirmRenderer } from "@/states/ConfirmState/ConfirmRenderer"
-import { CallbackQuery } from "node-telegram-bot-api"
+import { CallbackQuery, Message } from "node-telegram-bot-api"
 
-export class ConfirmState extends ChatState<ConfirmStateData> implements ICallbackQueryHandler {
+export class ConfirmState extends ChatState<ConfirmStateData> implements ICallbackQueryHandler, IMessageHandler {
 	public generateSaveData() {
 		return { selected: null }
 	}
@@ -28,8 +28,15 @@ export class ConfirmState extends ChatState<ConfirmStateData> implements ICallba
 		if (isNaN(saveData.selected)) throw new Error("Selected index is NaN")
 
 		const action = this.actions[saveData.selected]
+		return this.calculateActionResultStateId(context, action)
+	}
 
+	async handleMessage(context: ChatContextManager, msg: Message): Promise<string | undefined> {
+		if (this.actions.length === 1) return this.calculateActionResultStateId(context, this.actions[0])
+	}
+
+	private async calculateActionResultStateId(context: ChatContextManager, action: Action) {
 		if (typeof action.result === "function") return await action.result(context)
-		else return action.result
+		else return action.result ?? context.getNextStateId()
 	}
 }

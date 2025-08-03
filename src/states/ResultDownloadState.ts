@@ -16,18 +16,23 @@ export class ResultDownloadState extends ChatState<ResultDownloadData> implement
 	async send(context: ChatContextManager): Promise<void> {
 		const { chatId, bot } = context.data
 
+		// Если бот выдаст ошибку в этом состоянии, то он зависнет
 		try {
 			const message = await bot.sendMessage(chatId, "⌛ Подготовка архива...")
 
 			const archivePath = `downloads/${chatId}/audio.zip`
 			await archiveFolderContent(`downloads/${chatId}/clips`, archivePath)
 
-			await bot.deleteMessage(chatId, message.message_id)
+			// await bot.deleteMessage(chatId, message.message_id)
 			await bot.sendDocument(chatId, archivePath)
 
-			// fs.rm(archivePath)
+			fs.rm(archivePath)
 		} catch {
 			this.getSaveData(context).error = true
+
+			try {
+				await bot.sendMessage(chatId, "⚠️ Ошибка при подготовке архива. Пожалуйста, попробуйте еще раз.")
+			} catch {}
 		} finally {
 			context.sendEmptyEvent()
 		}
