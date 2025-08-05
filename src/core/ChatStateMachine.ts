@@ -44,7 +44,7 @@ export class ChatStateMachine {
 			await currentState.enter(context)
 			await currentState.send(context)
 
-			this.sessionManager.saveSession(chatId, session)
+			await this.sessionManager.saveSession(chatId, session)
 			return
 		}
 
@@ -73,13 +73,13 @@ export class ChatStateMachine {
 		}
 
 		await this.handleMiddleware(event, "after", context)
-		this.sessionManager.saveSession(chatId, session)
+		await this.sessionManager.saveSession(chatId, session)
 	}
 
 	private async loadSession(chatId: number) {
 		return {
-			isFirstMessage: !this.sessionManager.hasSession(chatId),
-			session: this.sessionManager.getSession(chatId),
+			isFirstMessage: !(await this.sessionManager.hasSession(chatId)),
+			session: await this.sessionManager.getSession(chatId),
 		}
 	}
 

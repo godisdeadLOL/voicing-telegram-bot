@@ -3,3 +3,5 @@ downloads
 dist
 .vscode
 node_modules
+sessions.json
+visualized
